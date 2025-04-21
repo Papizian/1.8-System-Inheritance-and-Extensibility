@@ -66,4 +66,11 @@ public class ProductManagerTest {
         Product[] found = manager.searchBy("a");
         assertEquals(2, found.length);
     }
+    @Test
+    public void testRemoveNonExistingProductShouldThrow() {
+        ProductRepository repo = new ProductRepository();
+        ProductManager manager = new ProductManager(repo);
+
+        assertThrows(NotFoundException.class, () -> repo.removeById(999));
+    }
 }

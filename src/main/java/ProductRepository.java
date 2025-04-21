@@ -6,9 +6,7 @@ public class ProductRepository {
             throw new IllegalArgumentException();
         }
         Product[] tmp = new Product[products.length + 1];
-        for (int i = 0; i < products.length; i++) {
-            tmp[i] = products[i];
-        }
+        System.arraycopy(products, 0, tmp, 0, products.length);
         tmp[tmp.length - 1] = product;
         products = tmp;
     }
@@ -17,19 +15,21 @@ public class ProductRepository {
         return products;
     }
 
-    public void removeById(int id) {
-        int count = 0;
+    public Product findById(int id) {
         for (Product product : products) {
             if (product.getId() == id) {
-                count++;
+                return product;
             }
         }
+        return null;
+    }
 
-        if (count == 0) {
-            return;
+    public void removeById(int id) {
+        if (findById(id) == null) {
+            throw new NotFoundException("Element with id: " + id + " not found");
         }
 
-        Product[] tmp = new Product[products.length - count];
+        Product[] tmp = new Product[products.length - 1];
         int index = 0;
         for (Product product : products) {
             if (product.getId() != id) {
