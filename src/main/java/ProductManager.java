@@ -7,7 +7,7 @@ public class ProductManager {
 
     public void add(Product product) {
         if (product == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Product cannot be null");
         }
         repository.save(product);
     }
